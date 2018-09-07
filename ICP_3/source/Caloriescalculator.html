@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="padding:40px;background-color:#64B5F6;">
+<h2 style="padding-left:40%;">Calories Calculator</h2>
+<div class="container">
+    <div ng-app="Caloriesinfo"  ng-controller="Calctrl" class="jumbotron">
+        <h3><p>Enter the food item below  </p></h3>
+        <input type="text"   ng-model="Fooditem" class="form-control">
+        <br>
+        <br>
+        <div class="row">
+
+            <div class="col-lg-6"><button id="button" ng-click="getCaloriesinfo()" class="btn btn-primary">Calories Details</button><br><br></div>
+        <div class="col-lg-6"><button id="audiobtn" ng-click="getAudioinfo()" class="btn btn-primary"><span class="glyphicon glyphicon-music"></span> Audio</button><br><br></div>
+        </div>
+
+                <p>{{ calories }}</p>
+                <p>{{ weight}}<p>
+        <div align="center" id="Audio"></div>
+        <script>
+
+            var app=angular.module('Caloriesinfo',[])
+                .controller('Calctrl', function($scope, $http) {
+                    var calories,weight;
+                    {
+
+                        $scope.getCaloriesinfo = function() {
+                            console.log($scope.Fooditem)
+
+                            $http.get(' https://api.nutritionix.com/v1_1/search/' + $scope.Fooditem + '?results=0:1&fields=*&appId=27763a03&appKey=0ff69e202558be5e42174edb9037a45d').success(function (data) {
+                                console.log(data);
+                                $scope.calories = "calories:" + data.hits[0].fields.nf_calories;
+                                $scope.weight = "weight:" + data.hits[0].fields.nf_serving_weight_grams;
+
+                            })
+                        }
+
+                        $scope.getAudioinfo = function() {
+                            console.log($scope.Fooditem)
+
+                            $http.get(' https://api.nutritionix.com/v1_1/search/' + $scope.Fooditem + '?results=0:1&fields=*&appId=27763a03&appKey=0ff69e202558be5e42174edb9037a45d').success(function (data) {
+                                console.log(data);
+                                var Audio = 'https://stream.watsonplatform.net/text-to-speech/api/v1/synthesize?username=c83bff6f-3ed7-42d8-9b8e-cd4e3ac775c8&password=8kRVr2Chel7e&text=' + $scope.Fooditem;
+                                document.getElementById("Audio").innerHTML = "<audio controls='' autostart='false()' name='media'><source src='" + Audio + "' type=''audio/mp3'></audio>";
+
+
+                            })
+                        }
+
+
+                    }
+                });
+        </script>
+</div>
+</div>
+</body>
+</html>
