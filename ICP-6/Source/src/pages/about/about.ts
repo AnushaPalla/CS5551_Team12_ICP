@@ -12,11 +12,11 @@ export class AboutPage {
   }
 
   Signup() {
-        var alert = this.alertCrtl.create({
-          title: "Registered Successfully",
-          subTitle: "Account is Created",
-          buttons: ['ok']
-        });
-        alert.present();
-    }
+    var alert = this.alertCrtl.create({
+      title: "Registered Successfully",
+      subTitle: "Account is Created",
+      buttons: ['ok']
+    });
+    alert.present();
   }
+}

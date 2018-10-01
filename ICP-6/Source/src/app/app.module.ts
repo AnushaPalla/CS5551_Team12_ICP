@@ -10,7 +10,6 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import {Register} from "../pages/Register/register";
 
 @NgModule({
   declarations: [
@@ -18,8 +17,7 @@ import {Register} from "../pages/Register/register";
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage,
-    Register
+    TabsPage
   ],
   imports: [
     BrowserModule,
@@ -31,8 +29,7 @@ import {Register} from "../pages/Register/register";
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage,
-    Register
+    TabsPage
   ],
   providers: [
     StatusBar,
@@ -40,6 +37,4 @@ import {Register} from "../pages/Register/register";
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
-export class AppModule {
-
-}
+export class AppModule {}

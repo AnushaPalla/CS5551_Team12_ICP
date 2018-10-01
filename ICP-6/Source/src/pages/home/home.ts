@@ -20,7 +20,7 @@ export class HomePage {
   }
 
   signIn() {
-    if (this.uname == "nikki" && this.password == "nikki") {
+    if (this.uname == "anusha" && this.password == "palla") {
       var alert = this.alertCtrl.create({
         title: "Login Successfull!",
         subTitle: "Welcome" + " " + this.uname,
