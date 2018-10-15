@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+
+    .image{
+        background-image: url("image.png");
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-size: 1550px 800px;
+
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>OCR</title>
+    <script src="tessreact.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/naptha/tesseract.js/0.2.0/dist/tesseract.js">
+    </script>
+
+</head>
+<body style="background-image: url(https://www.htmlcsscolor.com/preview/gallery/7FDFFF.png);background-repeat: no-repeat;background-position: top center;background-size: 1550px 800px;">
+<form align="center">
+ <h1>Character Recognization</h1><br><br>
+<input class="form-control" type="text" id="url" placeholder="Please Enter URL" /><br><br>
+<input type="button" id="go_button" value="Get Results" onclick="OCR()"/>
+<div id="results"> </div>
+<div id="status"> </div>
+</form>
+<script>
+    function OCR() {
+        url =document.getElementById("url").value;
+        Tesseract.recognize(url)
+            .then(function(result) {
+                document.getElementById("results")
+                    .innerText = result.text;
+            }).progress(function(result) {
+            document.getElementById("status")
+                .innerText = result["status"] + " (" +
+                (result["progress"] * 100) + "%)";
+        });
+    }
+</script>
+</body>
+</html>
