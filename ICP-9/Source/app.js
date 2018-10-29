@@ -6,9 +6,10 @@ const MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 
 // Connection URL
-const url = 'mongodb://AnushaPalla:admin123@ds237713.mlab.com:37713/clientserverdb';
+const url = 'mongodb://root:roott1@ds221242.mlab.com:21242/cruddb';
+
 // Database Name
-const dbName = 'clientserverdb';
+const dbName = 'cruddb';
 
 //Body Parser is used to parse the incomeing request.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,7 +27,7 @@ app.get("/", (req, res, next) => {
             res.send(JSON.stringify(err));
             res.end();
         }
-        const db = client.db(clientserverdb);
+        const db = client.db(dbName);
         //Fectching the data
         db.collection('students').find().toArray(function (err, result) {
             if (err) {
@@ -49,7 +50,7 @@ app.post("/create", (req, res, next) => {
             res.write("connecting to Database failed");
             res.end();
         }
-        const db = client.db(clientserverdb);
+        const db = client.db(dbName);
         console.log(req.body);
         //Inserting the record in the database.
         db.collection('students').insertOne(req.body, function (err, result) {
@@ -71,7 +72,7 @@ app.put("/update/:id", (req, res, next) => {
             res.send("connecting to Database failed");
             res.end();
         }
-        const db = client.db(clientserverdb);
+        const db = client.db(dbName);
         console.log(req.body);
         //Updating the record using id.
         db.collection('students').updateOne({_id:ObjectId( req.params.id)},{ $set: req.body }, function (err, result) {
@@ -87,14 +88,14 @@ app.put("/update/:id", (req, res, next) => {
 
 //Deleting the record in the database using id.
 app.delete("/delete/:id", (req, res, next) => {
-     //Connecting to database
+    //Connecting to database
     MongoClient.connect(url, { useNewUrlParser: true },function (err, client) {
         //If connection failed the it will go to if condition.
         if (err) {
             res.send("connecting to Database failed");
             res.end();
         }
-        const db = client.db(clientserverdb);
+        const db = client.db(dbName);
         console.log(req.params.id);
         //Deleteing the record.
         db.collection('students').deleteOne({_id:ObjectId( req.params.id)}, function (err, result) {
@@ -117,7 +118,7 @@ app.get("/search", (req, res, next) => {
             res.send(JSON.stringify(err));
             res.end();
         }
-        const db = client.db(clientserverdb);
+        const db = client.db(dbName);
         var searchString = {};
         searchString[req.query["search"]] ={ $eq:  req.query["term"] } ;
         console.log(searchString);
@@ -134,7 +135,7 @@ app.get("/search", (req, res, next) => {
     });
 });
 
-//Created the node server adn listing at port 3001 
+//Created the node server adn listing at port 3001
 app.listen("3001", () => {
     console.log("localhost:3001");
 });
